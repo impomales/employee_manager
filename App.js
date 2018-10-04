@@ -1,9 +1,10 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import { StyleSheet, Text, SafeAreaView } from 'react-native';
-import reducers from './src/reducers';
+import { SafeAreaView } from 'react-native';
 import firebase from 'firebase';
+import reducers from './src/reducers';
+import LoginForm from './src/components/LoginForm';
 
 export default class App extends React.Component {
   componentDidMount() {
@@ -22,18 +23,10 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={createStore(reducers)}>
-        <SafeAreaView style={styles.container}>
-          <Text>Hello!</Text>
+        <SafeAreaView>
+          <LoginForm />
         </SafeAreaView>
       </Provider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center'
-  }
-});

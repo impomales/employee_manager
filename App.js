@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import { Text, SafeAreaView } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import firebase from 'firebase';
 import reducers from './src/reducers';
 import LoginForm from './src/components/LoginForm';

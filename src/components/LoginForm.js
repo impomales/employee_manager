@@ -5,14 +5,13 @@ import { emailChanged, passwordChanged } from '../actions';
 
 class LoginForm extends Component {
   render() {
-    console.log(this.props.email);
     return (
       <Card>
         <CardSection>
           <Input
             label="Email"
             placeholder="email@gmail.com"
-            onChangeText={this.props.emailChanged}
+            onChangeText={this.props.emailChanged.bind(this)}
           />
         </CardSection>
         <CardSection>
@@ -20,7 +19,7 @@ class LoginForm extends Component {
             secureTextEntry
             label="password"
             placeholder="pass"
-            onChangeText={this.props.passwordChanged}
+            onChangeText={this.props.passwordChanged.bind(this)}
           />
         </CardSection>
         <CardSection>

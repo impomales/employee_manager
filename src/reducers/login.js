@@ -1,4 +1,4 @@
-import { EMAIL_CHANGED, PASSWORD_CHANGED } from './types';
+import { EMAIL_CHANGED, PASSWORD_CHANGED } from '../actions/types';
 
 const initialState = {
   email: '',

@@ -4,6 +4,21 @@ import { CardSection, Card, Input, Button } from './common';
 import { emailChanged, passwordChanged } from '../actions';
 
 class LoginForm extends Component {
+  constructor(props) {
+    super(props);
+
+    this.onEmailChange = this.onEmailChange.bind(this);
+    this.onPasswordChanged = this.onPasswordChanged.bind(this);
+  }
+
+  onEmailChange(text) {
+    this.props.emailChanged(text);
+  }
+
+  onPasswordChanged(text) {
+    this.props.passwordChanged(text);
+  }
+
   render() {
     return (
       <Card>
@@ -11,7 +26,8 @@ class LoginForm extends Component {
           <Input
             label="Email"
             placeholder="email@gmail.com"
-            onChangeText={this.props.emailChanged.bind(this)}
+            onChangeText={this.props.onEmailChanged}
+            value={this.props.email}
           />
         </CardSection>
         <CardSection>
@@ -19,7 +35,8 @@ class LoginForm extends Component {
             secureTextEntry
             label="password"
             placeholder="pass"
-            onChangeText={this.props.passwordChanged.bind(this)}
+            onChangeText={this.props.onPasswordChanged}
+            value={this.props.password}
           />
         </CardSection>
         <CardSection>
@@ -30,10 +47,10 @@ class LoginForm extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  email: state.login.email,
-  password: state.login.password
-});
+const mapStateToProps = state => {
+  const { email, password } = state.login;
+  return { email, password };
+};
 
 const mapDispatchToProps = dispatch => ({
   emailChanged: text => {

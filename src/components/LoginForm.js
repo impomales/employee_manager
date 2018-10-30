@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { CardSection, Card, Input, Button } from './common';
-import { emailChanged, passwordChanged } from '../reducers/login';
+import { emailChanged, passwordChanged } from '../actions';
 
 class LoginForm extends Component {
   render() {

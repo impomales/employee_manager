@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { CardSection, Card, Input, Button } from './common';
 import { emailChanged, passwordChanged, loginUser } from '../actions';
+
+const styles = StyleSheet.create({
+  errorTextStyle: {
+    fontSize: 20,
+    alignSelf: 'center',
+    color: 'red'
+  }
+});
 
 class LoginForm extends Component {
   constructor(props) {
@@ -25,6 +34,16 @@ class LoginForm extends Component {
     this.props.loginUser({ email, password });
   }
 
+  renderError() {
+    return this.props.error && (
+      <View style={{backgroundColor: 'white'}}>
+        <Text style={styles.errorTextStyle}>
+          {this.props.error}
+        </Text>
+      </View>
+    )
+  }
+
   render() {
     return (
       <Card>
@@ -45,6 +64,7 @@ class LoginForm extends Component {
             value={this.props.password}
           />
         </CardSection>
+        {this.renderError()}
         <CardSection>
           <Button onPress={this.onButtonPress}>Login</Button>
         </CardSection>
@@ -54,8 +74,8 @@ class LoginForm extends Component {
 }
 
 const mapStateToProps = state => {
-  const { email, password } = state.login;
-  return { email, password };
+  const { email, password, error } = state.login;
+  return { email, password, error };
 };
 
 const mapDispatchToProps = {

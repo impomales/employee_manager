@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import { CardSection, Card, Input, Button } from './common';
+import { CardSection, Card, Input, Button, Spinner } from './common';
 import { emailChanged, passwordChanged, loginUser } from '../actions';
 
 const styles = StyleSheet.create({
@@ -35,13 +35,21 @@ class LoginForm extends Component {
   }
 
   renderError() {
-    return this.props.error && (
-      <View style={{backgroundColor: 'white'}}>
-        <Text style={styles.errorTextStyle}>
-          {this.props.error}
-        </Text>
-      </View>
-    )
+    return (
+      this.props.error && (
+        <View style={{ backgroundColor: 'white' }}>
+          <Text style={styles.errorTextStyle}>{this.props.error}</Text>
+        </View>
+      )
+    );
+  }
+
+  renderButton() {
+    return this.props.loading ? (
+      <Spinner size="large" />
+    ) : (
+      <Button onPress={this.onButtonPress}>Login</Button>
+    );
   }
 
   render() {
@@ -65,17 +73,15 @@ class LoginForm extends Component {
           />
         </CardSection>
         {this.renderError()}
-        <CardSection>
-          <Button onPress={this.onButtonPress}>Login</Button>
-        </CardSection>
+        <CardSection>{this.renderButton()}</CardSection>
       </Card>
     );
   }
 }
 
 const mapStateToProps = state => {
-  const { email, password, error } = state.login;
-  return { email, password, error };
+  const { email, password, error, loading } = state.login;
+  return { email, password, error, loading };
 };
 
 const mapDispatchToProps = {

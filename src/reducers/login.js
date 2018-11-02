@@ -1,19 +1,17 @@
-const EMAIL_CHANGED = 'EMAIL_CHANGED';
-const PASSWORD_CHANGED = 'PASSWORD_CHANGED';
-
-export const emailChanged = text => ({
-  type: EMAIL_CHANGED,
-  payload: text
-});
-
-export const passwordChanged = text => ({
-  type: PASSWORD_CHANGED,
-  payload: text
-});
+import {
+  EMAIL_CHANGED,
+  PASSWORD_CHANGED,
+  LOGIN_USER_SUCCESS,
+  LOGIN_USER_FAIL,
+  LOGIN_USER
+} from '../actions/types';
 
 const initialState = {
   email: '',
-  password: ''
+  password: '',
+  user: {},
+  error: '',
+  loading: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -22,6 +20,21 @@ const reducer = (state = initialState, action) => {
       return { ...state, email: action.payload };
     case PASSWORD_CHANGED:
       return { ...state, password: action.payload };
+    case LOGIN_USER:
+      return { ...state, loading: true, error: '' };
+    case LOGIN_USER_SUCCESS:
+      return {
+        ...state,
+        ...initialState,
+        user: action.payload
+      };
+    case LOGIN_USER_FAIL:
+      return {
+        ...state,
+        error: 'Authentication Failed.',
+        password: '',
+        loading: false
+      };
     default:
       return state;
   }

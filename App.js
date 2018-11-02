@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import ReduxThunk from 'redux-thunk';
+import { createStore, applyMiddleware } from 'redux';
 import { SafeAreaView } from 'react-native';
 import firebase from 'firebase';
 import reducers from './src/reducers';
 import LoginForm from './src/components/LoginForm';
 
-export default class App extends React.Component {
+export default class App extends Component {
   componentDidMount() {
     const config = {
       apiKey: 'AIzaSyDjBmRRCjd2gY8pSRTm8Zh8urjWOOjeBSw',
@@ -22,7 +23,7 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <Provider store={createStore(reducers)}>
+      <Provider store={createStore(reducers, {}, applyMiddleware(ReduxThunk))}>
         <SafeAreaView>
           <LoginForm />
         </SafeAreaView>

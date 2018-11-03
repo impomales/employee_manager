@@ -6,6 +6,7 @@ import {
   LOGIN_USER
 } from './types';
 import firebase from 'firebase';
+import { Actions } from 'react-native-router-flux';
 
 // action creators.
 export const emailChanged = text => ({
@@ -34,12 +35,18 @@ export const loginUser = ({ email, password }) => {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(user => dispatch(loginUserSuccess(user)))
+      .then(user => {
+        dispatch(loginUserSuccess(user));
+        Actions.employeeList();
+      })
       .catch(() => {
         firebase
           .auth()
           .createUserWithEmailAndPassword(email, password)
-          .then(user => dispatch(loginUserSuccess(user)))
+          .then(user => {
+            Actions.employeeList();
+            dispatch(loginUserSuccess(user))
+          })
           .catch(() => dispatch(loginUserFail()));
       });
   };

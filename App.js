@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
-import { SafeAreaView } from 'react-native';
 import firebase from 'firebase';
 import reducers from './src/reducers';
-import LoginForm from './src/components/LoginForm';
+import Router from './src/Router';
 
 export default class App extends Component {
   componentDidMount() {
@@ -24,9 +23,7 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={createStore(reducers, {}, applyMiddleware(ReduxThunk))}>
-        <SafeAreaView>
-          <LoginForm />
-        </SafeAreaView>
+        <Router />
       </Provider>
     );
   }

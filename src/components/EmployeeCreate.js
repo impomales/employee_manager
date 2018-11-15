@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Picker, Text } from 'react-native';
-import { employeeUpdate } from '../actions';
+import { employeeUpdate, employeeCreate } from '../actions';
 import { Card, CardSection, Input, Button } from './common';
 
 const DAYS_OF_WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
@@ -13,54 +13,66 @@ const styles = {
   }
 };
 
-const EmployeeCreate = props => {
-  const { name, phone, shift } = props;
-  return (
-    <Card>
-      <CardSection>
-        <Input
-          label="Name"
-          placeholder="Jane"
-          value={name}
-          onChangeText={value => props.employeeUpdate({ prop: 'name', value })}
-        />
-      </CardSection>
-      <CardSection>
-        <Input
-          label="Phone"
-          placeholder="555-555-5555"
-          value={phone}
-          onChangeText={value => props.employeeUpdate({ prop: 'phone', value })}
-        />
-      </CardSection>
+class EmployeeCreate extends Component {
+  onButtonPress() {
+    const { name, phone, shift } = this.props;
 
-      <CardSection style={{ flexDirection: 'column' }}>
-        <Text style={styles.pickerTextStyle}>Shift</Text>
-        <Picker
-          selectedValue={shift}
-          onValueChange={value =>
-            props.employeeUpdate({ prop: 'shift', value })
-          }
-        >
-          {DAYS_OF_WEEK.map(day => (
-            <Picker.Item key={day} label={day} value={day} />
-          ))}
-        </Picker>
-      </CardSection>
+    this.props.employeeCreate({ name, phone, shift: shift || 'Monday' });
+  }
 
-      <CardSection>
-        <Button>Create</Button>
-      </CardSection>
-    </Card>
-  );
-};
+  render() {
+    const { name, phone, shift } = this.props;
+    return (
+      <Card>
+        <CardSection>
+          <Input
+            label="Name"
+            placeholder="Jane"
+            value={name}
+            onChangeText={value =>
+              this.props.employeeUpdate({ prop: 'name', value })
+            }
+          />
+        </CardSection>
+        <CardSection>
+          <Input
+            label="Phone"
+            placeholder="555-555-5555"
+            value={phone}
+            onChangeText={value =>
+              this.props.employeeUpdate({ prop: 'phone', value })
+            }
+          />
+        </CardSection>
+
+        <CardSection style={{ flexDirection: 'column' }}>
+          <Text style={styles.pickerTextStyle}>Shift</Text>
+          <Picker
+            selectedValue={shift}
+            onValueChange={value =>
+              this.props.employeeUpdate({ prop: 'shift', value })
+            }
+          >
+            {DAYS_OF_WEEK.map(day => (
+              <Picker.Item key={day} label={day} value={day} />
+            ))}
+          </Picker>
+        </CardSection>
+
+        <CardSection>
+          <Button onPress={this.onButtonPress.bind(this)}>Create</Button>
+        </CardSection>
+      </Card>
+    );
+  }
+}
 
 const mapStateToProps = state => {
   const { name, phone, shift } = state.employeeForm;
   return { name, phone, shift };
 };
 
-const mapDispatchToProps = { employeeUpdate };
+const mapDispatchToProps = { employeeUpdate, employeeCreate };
 
 export default connect(
   mapStateToProps,

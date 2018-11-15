@@ -13,8 +13,8 @@ const styles = {
   }
 };
 
-const CardSection = props => (
-  <View style={styles.containerStyle}>{props.children}</View>
+const CardSection = ({ style, children }) => (
+  <View style={[styles.containerStyle, style]}>{children}</View>
 );
 
 export { CardSection };

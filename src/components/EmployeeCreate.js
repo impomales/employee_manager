@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { employeeUpdate, employeeCreate } from '../actions';
+import { employeeCreate } from '../actions';
 import { Card, CardSection, Button } from './common';
 import EmployeeForm from './EmployeeForm';
 
@@ -28,7 +28,7 @@ const mapStateToProps = state => {
   return { name, phone, shift };
 };
 
-const mapDispatchToProps = { employeeUpdate, employeeCreate };
+const mapDispatchToProps = { employeeCreate };
 
 export default connect(
   mapStateToProps,

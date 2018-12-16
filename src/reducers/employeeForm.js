@@ -1,4 +1,4 @@
-import { EMPLOYEE_UPDATE, EMPLOYEE_CREATE } from '../actions/types';
+import { EMPLOYEE_UPDATE, EMPLOYEE_SAVE, EMPLOYEE_CREATE } from '../actions/types';
 
 const initialState = {
   name: '',
@@ -11,6 +11,7 @@ const reducer = (state = initialState, action) => {
     case EMPLOYEE_UPDATE:
       return { ...state, [action.payload.prop]: action.payload.value };
     case EMPLOYEE_CREATE:
+    case EMPLOYEE_SAVE:
       return initialState;
     default:
       return state;

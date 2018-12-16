@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import Communications from 'react-native-communications';
-import { employeeUpdate, employeeSave } from '../actions';
+import { employeeUpdate, employeeSave, employeeDelete } from '../actions';
 import { Card, CardSection, Button, Confirm } from './common';
 import EmployeeForm from './EmployeeForm';
 
@@ -41,6 +41,14 @@ class EmployeeEdit extends Component {
     this.setState({ showModal: true });
   }
 
+  onAccept() {
+    this.props.employeeDelete({ uid: this.props.employee.uid });
+  }
+
+  onDecline() {
+    this.setState({ showModal: false });
+  }
+
   render() {
     return (
       <Card>
@@ -54,7 +62,13 @@ class EmployeeEdit extends Component {
         <CardSection>
           <Button onPress={this.onFirePress.bind(this)}>Fire Employee</Button>
         </CardSection>
-        <Confirm visible={this.state.showModal}>'Blah'</Confirm>
+        <Confirm
+          visible={this.state.showModal}
+          onAccept={this.onAccept.bind(this)}
+          onDecline={this.onDecline.bind(this)}
+        >
+          Are you sure you want to fire this employee?
+        </Confirm>
       </Card>
     );
   }
@@ -65,7 +79,7 @@ const mapStateToProps = state => {
   return { name, phone, shift };
 };
 
-const mapDispatchToProps = { employeeUpdate, employeeSave };
+const mapDispatchToProps = { employeeUpdate, employeeSave, employeeDelete };
 
 export default connect(
   mapStateToProps,
